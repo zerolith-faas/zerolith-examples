@@ -5,8 +5,8 @@
 Ready-to-deploy example functions for [zerolith](https://zerolith.io), the scale-to-zero
 Functions-as-a-Service platform.
 
-Each directory holds a single file — the handler — that you can paste as-is into the deploy
-form. The four gallery examples are the **code really running in production** behind the public
+Each directory holds the handler — usually a single file, sometimes one per function when the
+example makes several work together — that you can paste as-is into the deploy form. The five gallery examples are the **code really running in production** behind the public
 URLs listed below: what you read here is what answers when you call.
 
 > The handlers' own docstrings and comments are in French, as is the platform's primary
@@ -20,6 +20,7 @@ URLs listed below: what you read here is what answers when you call.
 | [`demo-dashboard/`](demo-dashboard/) | python | A weather dashboard returning a **complete HTML page**, its SVG drawn server-side. No bundler, no build step, no loading screen. | [call it](https://demo-dashboard-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/?city=Paris) |
 | [`demo-city/`](demo-city/) | python | An API aggregator: a geocode, then three **concurrent** calls merged into one JSON response. Latency is the slowest API, not their sum. | [call it](https://demo-city-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/?city=Paris&lang=en) |
 | [`stock-api/`](stock-api/) | python | An inventory API backed by a **private database**. State survives sleep. | [call it](https://stock-api-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/stats) |
+| [`quiz/`](quiz/) | python | A quiz that **hides a database wake-up** behind the time you spend playing. Two linked functions: one renders the page, the other holds the database. | [play](https://jeu-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/) |
 | [`timer/`](timer/) | nodejs24 | A countdown-timer page. The handler returns the HTML; the interactivity runs in the browser. | [open it](https://timer-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/) |
 
 These functions sit at **zero instances** until someone calls them. The first call after a quiet
