@@ -49,9 +49,9 @@ Runtime `python`, handler `main.handler`. The libSQL client already ships with t
 1. Provision a database from the app, then **attach it** to the function. The two environment
    variables then appear in the pod without you writing them.
 2. Lay down the schema with [`migrator/main.py`](migrator/main.py): the database server cannot
-   call your functions, so migrations are explicit. Deploy the migrator as a private function,
-   designate it as the database's **migrator**, then trigger it from the UI, the API or an MCP
-   agent.
+   call your functions, so migrations are explicit. Deploy the migrator with the **`migrate`**
+   kind, designate it as the database's **migrator**, then trigger it from the UI, the API or an
+   MCP agent.
 3. Remove `STOCK_READ_ONLY` (or set it to `0`) to get the full write API.
 
 | Variable | Default | Purpose |
@@ -69,8 +69,10 @@ products(id, sku, name, category, price_cents, reorder_level, created_at)
 movements(id, product_id, delta, reason, created_at)
 ```
 
-Deploy it as a **separate private function** (it is DDL — it has no business on an open URL),
-attach the same database to it, designate it as the migrator, then trigger it. It is replayable:
+Deploy it with the **`migrate`** kind, as a separate function. It is DDL: it has no business on
+an open URL, and this kind has none — no service, no route, no hostname, and no pod between runs.
+It is private *by construction* rather than by a flag. Attach the same database to it, designate
+it as the migrator, then trigger it. It is replayable:
 `CREATE TABLE IF NOT EXISTS` throughout, and the demo catalogue is only seeded if the `products`
 table is empty. Re-run against a database already in use, it duplicates nothing and does not
 touch real stock.

@@ -53,20 +53,44 @@ JOURS = ["lun", "mar", "mer", "jeu", "ven", "sam", "dim"]
 # ─────────────────────────────────────────────────────────────────────────────
 
 
+def _get(client, url, params):
+    """GET avec quelques essais très courts, sur les erreurs de CONNEXION uniquement.
+
+    Nécessaire au démarrage à froid : le pod émet ses premiers paquets avant que la
+    NetworkPolicy ne soit programmée sur le nœud, et la toute première résolution DNS
+    sortante échoue — `httpx.ConnectError: [Errno -3] Temporary failure in name resolution`.
+    Sans ces essais, la requête qui RÉVEILLE la fonction est la seule qui échoue : elle rend
+    un 500 pendant que la suivante, sur le pod désormais chaud, passe. C'est le pire des
+    symptômes, parce qu'un rechargement le fait disparaître et que la démo a l'air instable
+    plutôt que cassée. Mesuré en production le 2026-08-25 ; `demo-city` porte le même
+    correctif depuis plus longtemps.
+
+    Seules les erreurs de connexion sont rejouées : un 404 ou un 500 de l'API amont est une
+    réponse, pas un aléa, et le rejouer ne ferait que tripler l'attente avant la même issue.
+    """
+    last = None
+    for attempt in range(3):
+        try:
+            return client.get(url, params=params)
+        except (httpx.ConnectError, httpx.ConnectTimeout) as exc:
+            last = exc
+            time.sleep(0.25 * (attempt + 1))
+    raise last
+
+
 def fetch(city, days):
     with httpx.Client(headers=UA, timeout=TIMEOUT) as client:
-        geo = client.get(
-            GEOCODE_URL, params={"name": city, "count": 1, "language": "fr"}
-        )
+        geo = _get(client, GEOCODE_URL, {"name": city, "count": 1, "language": "fr"})
         geo.raise_for_status()
         hits = geo.json().get("results") or []
         if not hits:
             return None
         place = hits[0]
 
-        forecast = client.get(
+        forecast = _get(
+            client,
             FORECAST_URL,
-            params={
+            {
                 "latitude": place["latitude"],
                 "longitude": place["longitude"],
                 "current": "temperature_2m,apparent_temperature,wind_speed_10m,relative_humidity_2m",

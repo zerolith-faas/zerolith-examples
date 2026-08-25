@@ -74,8 +74,11 @@ is not JSON is refused with a 400, before the database is even opened.
 
 Three functions, one database. Runtime `python`, handler `main.handler` throughout.
 
-1. **`quiz-migrate`** — [`migrator/main.py`](migrator/main.py), as a **private** function. It is
-   DDL; it has no business on an open URL.
+1. **`quiz-migrate`** — [`migrator/main.py`](migrator/main.py), deployed with the **`migrate`**
+   kind (`"kind": "migrate"` at create). It is DDL: it has no business on an open URL, and this
+   kind has none. No service, no route, no hostname, and no pod between runs — so it is private
+   *by construction* rather than by a flag, and `public: true` is refused rather than ignored. The
+   code does not change: `request` carries `method: "RUN"`.
 2. Create the database, attach it to the migrator, designate it as the database's **migrator**,
    then trigger it. It is replayable: `CREATE TABLE IF NOT EXISTS` throughout.
 3. **`quiz-api`** — [`api/main.py`](api/main.py), **public**, same database attached.
@@ -92,20 +95,17 @@ only in their first segment. Redeploy the pair under another account and it find
 | `DATABASE_AUTH_TOKEN` | injected | token, mounted from a write-only secret |
 | `QUIZ_API_URL` | derived from `Host` | on `jeu`, when the two functions do not share a suffix |
 
-### The CORS preflight never reaches your handler
+### The CORS preflight
 
 The two functions have different origins, so the API returns CORS headers. That is not enough: a
 `POST` in `application/json` is not a "simple" request, so the browser first sends an `OPTIONS`
-preflight — and the runtime declares its routes **without `OPTIONS`**. Flask answers it itself, with
-an empty `200` and not one `Access-Control-*`. The browser blocks the `POST` that follows, the page
-shows a write error, and the API is perfectly fine.
+preflight. The `OPTIONS` branch in [`api/main.py`](api/main.py) is what answers it: the runtime
+hands the method to the handler, so this function's CORS policy is decided there and nowhere else.
 
-The tell: `GET /wake` works (no preflight on a simple GET) and only the write fails. The workaround
-is in [`main.py`](main.py) — post as `text/plain;charset=UTF-8`, which is a simple request. Nothing
-changes server-side; `request.json()` parses the bytes it received without looking at the
-`Content-Type`.
-
-[`api/main.py`](api/main.py) keeps its `OPTIONS` branch, annotated as unreachable today.
+[`main.py`](main.py) posts as `text/plain;charset=UTF-8`, which is a simple request. That is a
+choice, not an obligation: a simple request skips the preflight, so it is one round trip less
+before the write. Nothing changes server-side; `request.json()` parses the bytes it received
+without looking at the `Content-Type`.
 
 ### A trap that cost a 500 in production
 

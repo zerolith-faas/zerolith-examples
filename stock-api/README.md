@@ -50,9 +50,9 @@ Runtime `python`, handler `main.handler`. Le client libSQL est déjà dans le ru
 1. Provisionnez une base depuis l'application, puis **attachez-la** à la fonction. Les deux
    variables d'environnement apparaissent alors dans le pod, sans que vous les écriviez.
 2. Posez le schéma avec [`migrator/main.py`](migrator/main.py) : le serveur de base ne peut pas
-   appeler vos fonctions, donc les migrations sont explicites. Déployez le migrateur en fonction
-   privée, désignez-le comme **migrateur** de la base, puis déclenchez-le depuis l'interface,
-   l'API ou un agent MCP.
+   appeler vos fonctions, donc les migrations sont explicites. Déployez le migrateur avec le type
+   **`migrate`**, désignez-le comme **migrateur** de la base, puis déclenchez-le depuis
+   l'interface, l'API ou un agent MCP.
 3. Retirez `STOCK_READ_ONLY` (ou passez-la à `0`) pour obtenir l'API complète en écriture.
 
 | Variable | Défaut | Rôle |
@@ -70,8 +70,10 @@ products(id, sku, name, category, price_cents, reorder_level, created_at)
 movements(id, product_id, delta, reason, created_at)
 ```
 
-Déployez-la en **fonction privée séparée** (c'est du DDL, ça n'a rien à faire sur une URL
-ouverte), attachez-lui la même base, désignez-la comme migratrice, puis déclenchez-la. Elle est
+Déployez-la avec le type **`migrate`**, en fonction séparée. C'est du DDL : ça n'a rien à faire
+sur une URL ouverte, et ce type n'en a aucune — ni service, ni route, ni nom d'hôte, et aucun pod
+entre deux exécutions. Elle est privée *par construction* et non par un drapeau. Attachez-lui la
+même base, désignez-la comme migratrice, puis déclenchez-la. Elle est
 rejouable : `CREATE TABLE IF NOT EXISTS` partout, et l'amorçage du catalogue de démonstration
 n'a lieu que si la table `products` est vide. Relancée sur une base déjà utilisée, elle ne
 duplique rien et ne touche pas au stock réel.

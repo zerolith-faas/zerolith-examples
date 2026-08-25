@@ -43,9 +43,9 @@ QUESTIONS = 10
 #
 # ATTENTION, ces en-têtes ne suffisent QUE pour les requêtes « simples » au sens CORS.
 # Un POST en `application/json` déclenche d'abord un OPTIONS de contrôle préalable, et
-# le runtime déclare ses routes SANS OPTIONS : Flask y répond lui-même, avec un 200
-# vide et aucun en-tête Access-Control-*. Le navigateur bloque alors le POST qui suit.
-# C'est pour ça que la page poste en `text/plain` — voir le commentaire dans `jeu`.
+# c'est la branche OPTIONS du handler, plus bas, qui y répond : le runtime passe la
+# méthode au handler. La page poste en `text/plain`, qui est une requête simple : elle
+# part sans contrôle préalable, donc avec un aller-retour de moins avant l'écriture.
 CORS = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
@@ -227,12 +227,10 @@ def _stats(db):
 
 def handler(request):
     method = request.method.upper()
-    # ATTENTION : cette branche ne s'execute pas aujourd'hui. Le runtime declare ses
-    # routes sans OPTIONS, donc Flask repond lui-meme au controle prealable CORS,
-    # avec un 200 vide et SANS le moindre en-tete Access-Control-*. C'est pourquoi
-    # la page poste en `text/plain` : une requete « simple » n'a pas de controle
-    # prealable. On garde la branche pour le jour ou le runtime passera OPTIONS au
-    # handler — elle sera juste, et elle ne nuit pas en attendant.
+    # Cette branche REPOND au controle prealable CORS : le runtime passe OPTIONS au
+    # handler comme n'importe quelle autre methode, donc la politique CORS de cette
+    # fonction est decidee ici, et nulle part ailleurs. Sans elle, un POST en
+    # application/json depuis une autre origine serait bloque par le navigateur.
     if method == "OPTIONS":
         return 204, b"", CORS
 

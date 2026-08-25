@@ -73,8 +73,11 @@ n'est pas du JSON est refusé en 400, avant même d'ouvrir la base.
 
 Trois fonctions, une base. Runtime `python`, handler `main.handler` partout.
 
-1. **`quiz-migrate`** — [`migrator/main.py`](migrator/main.py), en fonction **privée**. C'est du
-   DDL, ça n'a rien à faire sur une URL ouverte.
+1. **`quiz-migrate`** — [`migrator/main.py`](migrator/main.py), déployée avec le type
+   **`migrate`** (`"kind": "migrate"` à la création). C'est du DDL : ça n'a rien à faire sur une
+   URL ouverte, et ce type n'en a aucune. Ni service, ni route, ni nom d'hôte, et aucun pod entre
+   deux exécutions — elle est donc privée *par construction* et non par un drapeau, `public: true`
+   y étant refusé plutôt qu'ignoré. Le code ne change pas : `request` vaut `method: "RUN"`.
 2. Créez la base, attachez-la au migrateur, désignez-le comme **migrateur** de la base, puis
    déclenchez-le. Il est rejouable : `CREATE TABLE IF NOT EXISTS` partout.
 3. **`quiz-api`** — [`api/main.py`](api/main.py), **publique**, la même base attachée.
@@ -91,20 +94,18 @@ retrouve toute seule. `QUIZ_API_URL` reprend la main si vous nommez vos fonction
 | `DATABASE_AUTH_TOKEN` | injectée | jeton, monté depuis un secret en écriture seule |
 | `QUIZ_API_URL` | déduite du `Host` | sur `jeu`, si les deux fonctions ne partagent pas leur suffixe |
 
-### Le contrôle préalable CORS n'atteint jamais votre handler
+### Le contrôle préalable CORS
 
 Les deux fonctions ont des origines différentes, donc l'API renvoie les en-têtes CORS. Ça ne suffit
 pas : un `POST` en `application/json` n'est pas une requête « simple », le navigateur envoie donc
-d'abord un `OPTIONS` de contrôle préalable — et le runtime déclare ses routes **sans `OPTIONS`**.
-Flask y répond lui-même, par un `200` vide, sans le moindre `Access-Control-*`. Le navigateur bloque
-le `POST` qui suit, la page affiche une erreur d'écriture, et l'API va parfaitement bien.
+d'abord un `OPTIONS` de contrôle préalable. C'est la branche `OPTIONS` de
+[`api/main.py`](api/main.py) qui y répond : le runtime passe la méthode au handler, donc la
+politique CORS de la fonction est décidée là et nulle part ailleurs.
 
-Le signe qui oriente : `GET /wake` marche (pas de contrôle préalable sur un GET simple) et seule
-l'écriture échoue. Le contournement est dans [`main.py`](main.py) — poster en
-`text/plain;charset=UTF-8`, qui est une requête simple. Côté serveur rien ne change,
-`request.json()` analyse les octets reçus sans regarder le `Content-Type`.
-
-[`api/main.py`](api/main.py) garde sa branche `OPTIONS`, annotée comme inatteignable aujourd'hui.
+[`main.py`](main.py) poste en `text/plain;charset=UTF-8`, qui est une requête simple. C'est un
+choix, pas une obligation : une requête simple n'a pas de contrôle préalable, donc c'est un
+aller-retour de moins avant l'écriture. Côté serveur rien ne change, `request.json()` analyse les
+octets reçus sans regarder le `Content-Type`.
 
 ### Un piège qui a coûté un 500 en production
 
