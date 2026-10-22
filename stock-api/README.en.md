@@ -5,7 +5,7 @@
 A shop inventory API backed by a **private database**: catalogue, item sheet with its history,
 stock movements in and out, aggregates.
 
-**Live:** <https://stock-api-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/stats>
+**Live:** <https://stock-api-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/stats>
 (the public instance is **read-only** — writes are disabled so the data stays readable by
 everyone)
 

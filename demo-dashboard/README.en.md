@@ -6,7 +6,7 @@ A weather dashboard that returns a **complete HTML page**: the function fetches 
 server-side, computes the geometry of its two charts in Python, and returns a self-contained
 document — inline SVG, inline CSS, no external dependency.
 
-**Live:** <https://demo-dashboard-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/?city=Paris>
+**Live:** <https://demo-dashboard-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/?city=Paris>
 
 ## What it demonstrates
 

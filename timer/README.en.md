@@ -5,7 +5,7 @@
 A countdown-timer web page, in one Node.js function. Enter a duration and it counts down to
 00:00.
 
-**Live:** <https://timer-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/>
+**Live:** <https://timer-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/>
 
 ## What it demonstrates
 

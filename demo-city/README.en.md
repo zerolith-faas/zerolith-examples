@@ -5,7 +5,7 @@
 An API aggregator in one Python function: a geocode, then three **concurrent** calls (weather,
 air quality, Wikipedia) merged into a single JSON response.
 
-**Live:** <https://demo-city-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/?city=Paris&lang=en>
+**Live:** <https://demo-city-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/?city=Paris&lang=en>
 
 ## What it demonstrates
 

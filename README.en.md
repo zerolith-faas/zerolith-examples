@@ -17,11 +17,11 @@ URLs listed below: what you read here is what answers when you call.
 | Directory | Runtime | What it does | Live |
 |-----------|---------|--------------|------|
 | [`hello/`](hello/) | python · nodejs24 | The smallest handler that works, in both languages. The starting point. | — |
-| [`demo-dashboard/`](demo-dashboard/) | python | A weather dashboard returning a **complete HTML page**, its SVG drawn server-side. No bundler, no build step, no loading screen. | [call it](https://demo-dashboard-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/?city=Paris) |
-| [`demo-city/`](demo-city/) | python | An API aggregator: a geocode, then three **concurrent** calls merged into one JSON response. Latency is the slowest API, not their sum. | [call it](https://demo-city-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/?city=Paris&lang=en) |
-| [`stock-api/`](stock-api/) | python | An inventory API backed by a **private database**. State survives sleep. | [call it](https://stock-api-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/stats) |
-| [`quiz/`](quiz/) | python | A quiz that **hides a database wake-up** behind the time you spend playing. Two linked functions: one renders the page, the other holds the database. | [play](https://jeu-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/) |
-| [`timer/`](timer/) | nodejs24 | A countdown-timer page. The handler returns the HTML; the interactivity runs in the browser. | [open it](https://timer-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/) |
+| [`demo-dashboard/`](demo-dashboard/) | python | A weather dashboard returning a **complete HTML page**, its SVG drawn server-side. No bundler, no build step, no loading screen. | [call it](https://demo-dashboard-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/?city=Paris) |
+| [`demo-city/`](demo-city/) | python | An API aggregator: a geocode, then three **concurrent** calls merged into one JSON response. Latency is the slowest API, not their sum. | [call it](https://demo-city-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/?city=Paris&lang=en) |
+| [`stock-api/`](stock-api/) | python | An inventory API backed by a **private database**. State survives sleep. | [call it](https://stock-api-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/stats) |
+| [`quiz/`](quiz/) | python | A quiz that **hides a database wake-up** behind the time you spend playing. Two linked functions: one renders the page, the other holds the database. | [play](https://jeu-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/) |
+| [`timer/`](timer/) | nodejs24 | A countdown-timer page. The handler returns the HTML; the interactivity runs in the browser. | [open it](https://timer-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/) |
 
 These functions sit at **zero instances** until someone calls them. The first call after a quiet
 spell pays a brief cold start; `demo-city` and `demo-dashboard` report their own startup time in

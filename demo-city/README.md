@@ -5,7 +5,7 @@
 Un agrégateur d'API en une fonction Python : un géocodage, puis trois appels **concurrents**
 (météo, qualité de l'air, Wikipédia) fusionnés en une seule réponse JSON.
 
-**En direct :** <https://demo-city-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/?city=Paris>
+**En direct :** <https://demo-city-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/?city=Paris>
 
 ## Ce que ça montre
 

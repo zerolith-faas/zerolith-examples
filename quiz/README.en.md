@@ -5,8 +5,8 @@
 A ten-question quiz about serverless. While you answer it, the database wakes up backstage — and
 by the time your score needs saving, it has been up for a while.
 
-**Live:** <https://jeu-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/>
-(and <https://jeu-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/?prewarm=0> to play the
+**Live:** <https://jeu-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/>
+(and <https://jeu-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/?prewarm=0> to play the
 same game **without** the trick — that's the comparison, playable)
 
 > The handlers' own docstrings and comments are in French, as is the platform's primary

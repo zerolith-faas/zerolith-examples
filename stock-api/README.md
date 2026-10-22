@@ -5,7 +5,7 @@
 Une API d'inventaire de magasin, adossée à une **base de données privée** : catalogue, fiche
 article avec son historique, entrées et sorties de stock, agrégats.
 
-**En direct :** <https://stock-api-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/stats>
+**En direct :** <https://stock-api-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/stats>
 (instance publique en **lecture seule** — les écritures y sont désactivées pour que les données
 restent lisibles par tous)
 

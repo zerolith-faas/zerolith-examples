@@ -6,8 +6,8 @@ Un quiz de dix questions sur le serverless. Pendant que vous y répondez, la bas
 réveille en coulisse — et quand vient le moment d'enregistrer votre score, elle est debout depuis
 longtemps.
 
-**En direct :** <https://jeu-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/>
-(et <https://jeu-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/?prewarm=0> pour jouer la
+**En direct :** <https://jeu-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/>
+(et <https://jeu-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/?prewarm=0> pour jouer la
 même partie **sans** le tour de passe-passe — c'est la comparaison, jouable)
 
 ## Ce que ça montre

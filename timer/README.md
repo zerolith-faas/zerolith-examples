@@ -5,7 +5,7 @@
 Une page web de compte à rebours, en une fonction Node.js. On saisit une durée, elle décompte
 jusqu'à 00:00.
 
-**En direct :** <https://timer-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/>
+**En direct :** <https://timer-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/>
 
 ## Ce que ça montre
 

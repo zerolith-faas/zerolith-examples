@@ -6,7 +6,7 @@ Un tableau de bord météo qui renvoie une **page HTML complète** : la fonction
 données côté serveur, calcule la géométrie de ses deux graphiques en Python, et renvoie un
 document autonome — SVG en ligne, CSS en ligne, aucune dépendance externe.
 
-**En direct :** <https://demo-dashboard-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.io/?city=Paris>
+**En direct :** <https://demo-dashboard-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/?city=Paris>
 
 ## Ce que ça montre
 
