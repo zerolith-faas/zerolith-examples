@@ -6,7 +6,7 @@ Ready-to-deploy example functions for [zerolith](https://zerolith.io), the scale
 Functions-as-a-Service platform.
 
 Each directory holds the handler — usually a single file, sometimes one per function when the
-example makes several work together — that you can paste as-is into the deploy form. The six gallery examples are the **code really running in production** behind the public
+example makes several work together — that you can paste as-is into the deploy form. The seven gallery examples are the **code really running in production** behind the public
 URLs listed below: what you read here is what answers when you call.
 
 > The handlers' own docstrings and comments are in French, as is the platform's primary
@@ -23,6 +23,7 @@ URLs listed below: what you read here is what answers when you call.
 | [`quiz/`](quiz/) | python | A quiz that **hides a database wake-up** behind the time you spend playing. Two linked functions: one renders the page, the other holds the database. | [play](https://jeu-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/) |
 | [`timer/`](timer/) | nodejs24 | A countdown-timer page. The handler returns the HTML; the interactivity runs in the browser. | [open it](https://timer-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/) |
 | [`og-image/`](og-image/) | python | A link-preview image (Open Graph), a **PNG drawn on demand** with Pillow. Two third-party packages, built by the platform from a `requirements.txt`. | [see it](https://og-image-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/?title=Dependency+builds&subtitle=zerolith.fr) |
+| [`og-image-node/`](og-image-node/) | nodejs22 | The same image in **Node.js**: satori lays it out, resvg (a native binary) rasterises it. Three packages from a `package-lock.json`. | [see it](https://og-image-node-fn-539b8643bc44462c815a5ad5a423d976.api.zerolith.fr/?title=Node+dependencies&subtitle=zerolith.fr) |
 
 These functions sit at **zero instances** until someone calls them. The first call after a quiet
 spell pays a brief cold start; `demo-city` and `demo-dashboard` report their own startup time in

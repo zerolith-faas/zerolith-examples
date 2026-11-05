@@ -1,0 +1,13 @@
+{
+  "name": "og-image-node",
+  "private": true,
+  "description": "zerolith example: an Open Graph image drawn with satori + resvg, dependencies built by the platform",
+  "dependencies": {
+    "@fontsource/source-sans-3": "5.3.1",
+    "@resvg/resvg-js": "2.6.2",
+    "satori": "0.63.2"
+  },
+  "overrides": {
+    "fflate": "0.7.5"
+  }
+}
