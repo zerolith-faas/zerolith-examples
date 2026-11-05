@@ -1,0 +1,2 @@
+pillow==13.0.0
+font-source-sans-pro==0.0.1
